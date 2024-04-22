@@ -1,0 +1,31 @@
+import time
+
+def prime_factors(n):
+    i = 2
+    factors = []
+    while i * i <= n:
+        if n % i:
+            i += 1
+        else:
+            n //= i
+            factors.append(i)
+    if n > 1:
+        factors.append(n)
+    return factors
+
+def calc_d(e, phi_n):
+    calc_d = pow(e, -1, phi_n)
+    return calc_d
+
+e = int(input("Enter e: "))
+n = int(input("Enter n: "))
+
+start_time = time.perf_counter() * 1000
+print("Factors of N:", prime_factors(n))
+factors = prime_factors(n)
+p, q = factors
+phi_n = (p-1) * (q-1)
+print("phi n:", phi_n)
+print("Calculated d:", calc_d(e, phi_n))
+end_time = time.perf_counter() * 1000
+print("Runtime:", end_time - start_time, "ms")
