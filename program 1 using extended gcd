@@ -1,0 +1,43 @@
+import time
+
+def prime_factors(n):
+    i = 2
+    factors = []
+    while i * i <= n:
+        if n % i:
+            i += 1
+        else:
+            n //= i
+            factors.append(i)
+    if n > 1:
+        factors.append(n)
+    return factors
+
+def extended_gcd(a, b):
+    x0, x1, y0, y1 = 1, 0, 0, 1
+    while b:
+        q, a, b = a // b, b, a % b
+        x0, x1 = x1, x0 - q * x1
+        y0, y1 = y1, y0 - q * y1
+    return a, x0, y0 
+
+e = int(input("Enter e: "))
+n = int(input("Enter n: "))
+
+start_time = time.perf_counter() * 1000
+
+factors = prime_factors(n)
+p, q = factors
+phi_n = (p-1) * (q-1)
+gcd, x, y = extended_gcd(e, phi_n)
+
+d = x
+if d < 0:
+    d += phi_n
+
+print("phi n:", phi_n)
+print("Factors of N:", prime_factors(n))
+print("d:", d)
+
+end_time = time.perf_counter() * 1000
+print("Runtime:", end_time - start_time, "ms")
